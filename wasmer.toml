@@ -1,16 +1,23 @@
-# wasmer.toml
+# wasmer.toml (Versi Lengkap dengan Build Command)
+
 [package]
 name = "rakasyailendra/back-end-aksamedia"
 version = "0.1.0"
 description = "API for Aksamedia Employee Management"
 
+# BAGIAN BARU YANG DITAMBAHKAN
+# Memberitahu Wasmer cara membangun aplikasi sebelum dijalankan
+[build]
+command = "composer install --no-dev --optimize-autoloader"
+# ---------------------------------------------
+
 [[module]]
 name = "app"
-source = "public/index.php"
+source = "public" # Diarahkan ke folder public
 abi = "wasi"
 
 [module.interfaces]
-http = { path = "/", port = 80 }
+http = { path = "/", port = 8080 } # Menggunakan port yang umum untuk PaaS
 
 [[command]]
 name = "start"
@@ -19,6 +26,6 @@ runner = "https://webc.org/plumbers/php@8.2"
 
 [command.annotations.wasi]
 main-args = [
-    "-S", "0.0.0.0:80",
-    "-t", "public/",
+    "-S", "0.0.0.0:8080",
+    "-t", ".", # Root direktori server adalah 'public' yang sudah kita definisikan di atas
 ]
