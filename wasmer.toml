@@ -1,0 +1,24 @@
+# wasmer.toml
+[package]
+name = "rakasyailendra/back-end-aksamedia"
+version = "0.1.0"
+description = "API for Aksamedia Employee Management"
+
+[[module]]
+name = "app"
+source = "public/index.php"
+abi = "wasi"
+
+[module.interfaces]
+http = { path = "/", port = 80 }
+
+[[command]]
+name = "start"
+module = "app"
+runner = "https://webc.org/plumbers/php@8.2"
+
+[command.annotations.wasi]
+main-args = [
+    "-S", "0.0.0.0:80",
+    "-t", "public/",
+]
